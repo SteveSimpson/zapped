@@ -1,6 +1,8 @@
 Zapped
 ======
 
+WARNING - THIS PROJECT IS NOT COMPLETE, many things still do not work
+
 Zapped is a simple database that will import XML from the OWASP Zed Attack Proxy and allow
 you to review & analyze it.
 
