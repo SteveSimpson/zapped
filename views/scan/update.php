@@ -5,9 +5,14 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Scan */
 
-$this->title = 'Update Scan: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Scans', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$title = $model->scan_date . " (#".$model->id.")";
+
+$this->title = 'Update Scan: ' . $title;
+
+include('_breadcrumb.php');
+
+// $this->params['breadcrumbs'][] = ['label' => 'Scans', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="scan-update">

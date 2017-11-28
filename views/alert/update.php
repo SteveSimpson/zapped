@@ -6,7 +6,10 @@ use yii\helpers\Html;
 /* @var $model app\models\Alert */
 
 $this->title = 'Update Alert: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Alerts', 'url' => ['index']];
+
+include('_breadcrumb.php');
+
+//$this->params['breadcrumbs'][] = ['label' => 'Alerts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

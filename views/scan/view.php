@@ -6,8 +6,11 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Scan */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Scans', 'url' => ['index']];
+$this->title = $model->scan_date . " (#".$model->id.")";
+
+include('_breadcrumb.php');
+
+//$this->params['breadcrumbs'][] = ['label' => 'Scans', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="scan-view">
@@ -40,27 +43,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'review_completed',
         ],
     ]) ?>
-    
-    <?php 
+
+    <?php
         if (count($model->alerts)) {
             echo "<table class='table table-bordered table-striped'>\n";
             echo "<tr><th>Alert</th><th>Severity</th><th>Count</th><th>Review Status</th><th>Reviewed By</th><th>Review Completed</th></tr>\n";
             foreach ($model->alerts as $alert) {
                 $link = Html::a($alert->alert, ['/alert/view', 'id'=>$alert->id] );
-                
+
                 echo "<tr><td>" . $link . "</td>";
-                
+
                 echo "<td>" . $alert->severity . "</td>";
-                
+
                 echo "<td>" . $alert->count . "</td>";
-                
+
                 echo "<td>" . $alert->review_status . "</td>";
-                
+
                 echo "<td>" . strip_tags($alert->reviewed_by) . "</td>";
-                
+
                 echo "<td>" . strip_tags($alert->review_completed) . "</td></tr>\n";
             }
-            
+
             echo "</table>\n";
         }
      ?>

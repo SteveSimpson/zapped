@@ -7,7 +7,10 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Alert */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Alerts', 'url' => ['index']];
+
+include('_breadcrumb.php');
+
+//$this->params['breadcrumbs'][] = ['label' => 'Alerts', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="alert-view">
@@ -36,10 +39,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'riskcode',
             'confidence',
             'riskdesc',
-            'description:ntext',
+            'descriptionClean:raw',
             'count',
-            'solution',
-            'reference',
+            'solutionClean:raw',
+            'referenceClean:html',
             'cweid',
             'wascid',
             'sourceid',
@@ -49,20 +52,28 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ]) ?>
 
-    <?php 
+    <?php
         if (count($model->instances)) {
-            
+
             foreach ($model->instances as $instance) {
                 //$link = Html::a($alert->alert, ['/alert/view', 'id'=>$alert->id] );
                 $data  = "<ul>";
-                foreach (['uri', 'method', 'parameter', 'evidence', 'attack'] as $parameter) {
+                foreach (['uri', 'method', 'parameter', 'evidence', 'attack'] as $key => $parameter) {
                     if (strlen(trim($instance->$parameter)) > 0) {
-                        $data .= "<li>" . ucfirst($parameter) . ": " . $instance->$parameter . "</li>";
+                        if ($key == 'uri') {
+                            $url = $instance->$parameter;
+                            if (filter_var($url, FILTER_VALIDATE_URL)) {
+                                $url = Html::a($url, $url, ['target'=>'_blank']);
+                            }
+                            $data .= "<li>URI: " . $url . "</li>";
+                        } else {
+                            $data .= "<li>" . ucfirst($parameter) . ": " . $instance->$parameter . "</li>";
+                        }
                     }
                 }
 
                 $data .= "</ul>";
-                
+
                 echo Html::well($data);
             }
         }
